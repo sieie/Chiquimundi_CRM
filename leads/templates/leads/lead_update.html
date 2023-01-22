@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="text-gray-600 body-font overflow-hidden">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="lg:w-4/5 mx-auto flex flex-wrap">
+        <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+          <h2 class="text-sm title-font text-gray-500 tracking-widest">Actualiza Lead:</h2>
+          <h1 class="text-gray-900 text-3xl title-font font-medium mb-4"> {{lead.nombre}} {{lead.apellido}} </h1>
+          <div class="flex mb-4">
+            <a href="{% url 'leads:detalle' lead.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
+                Descripción
+            </a>
+            <a href="{% url 'leads:actualizar' lead.pk %}" class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
+                Actualizar
+            </a>
+            <!-- <a href="{% url 'leads:borrar' lead.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
+                Borrar
+            </a> -->
+          </div>
+            <form method="POST">
+            {% csrf_token %}   
+            {{form.as_p}}
+            <div class="flex md:mt-4 mt-2">
+              <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" type="submit">Regresar a la lista de Leads</button>
+          </div>
+            <div class="flex mt-2">
+                <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" type="submit">Guardar</button>
+            </form>
+            <a href="{% url 'leads:borrar' lead.pk %}" class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </a>
+            </div>
+        </div>
+        <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="https://dummyimage.com/400x400">
+      </div>
+    </div>
+  </section>
+
+    <a href="{% url 'leads:lista'%}">Regresar a la lista</a>
+    <hr />
+    <h1>Actualiza Lead: {{lead.nombre}} {{lead.apellido}} </h1>
+    <form method="POST">
+        {% csrf_token %}   
+        {{form.as_p}}
+        <button type="submit">Enviar</button>
+    </form>
+    
+{% endblock content %}

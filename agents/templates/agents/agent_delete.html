@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{% url 'agents:agent-lista' %}">Regresar a los agentes de ventas</a>
+    <hr/>
+    <h1>Estás seguro que deseas eliminar este Agente de Venta?</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Confirmar</button>
+    </form>
+{% endblock content %}
