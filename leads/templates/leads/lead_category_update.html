@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+{% block content %}
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="container mx-auto py-16 px-4 flex justify-center items-center">
+    <div class="lg:w-3/4 mx-auto bg-white rounded-lg shadow-md p-8">
+      <div class="p-8">
+        <h2 class="text-sm text-indigo-500 uppercase tracking-widest">Lead</h2>
+        <h1 class="text-gray-900 text-3xl font-medium mt-4">{{ lead.nombre }} {{ lead.apellido }}</h1>
+        <div class="flex mt-4 justify-between mb-4">
+          <a href="{% url 'leads:detail' lead.pk %}" class="border-b-4 border-gray-300 py-2 text-lg">Detalle</a>
+          <a href="{% url 'leads:lead-category-update' lead.pk %}"
+            class="border-b-4 border-indigo-500 py-2 text-lg">Categoría</a>
+          <a href="{% url 'leads:update' lead.pk %}" class="border-b-4 border-gray-300 py-2 text-lg">Modificar</a>
+        </div>
+        <form method="POST">
+          {% csrf_token %}
+          {{form|crispy}}
+          <div class="flex flex-col md:flex-row md:justify-between md:items-center mt-4">
+            <a href="{% url 'leads:list'%}"
+              class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded md:mb-0 mb-2">Regresar
+              a la lista de Leads</a>
+            <div class="md:flex md:space-x-4">
+              <button
+                class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                type="submit">Guardar</button>
+              <a href="{% url 'leads:delete' lead.pk %}"
+                class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

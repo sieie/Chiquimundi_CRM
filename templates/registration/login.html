@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
+{% load tailwind_filters %}
 {% block content %}
-  
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-    <hr/>
-    <a href="{% url 'reset-password' %}">¿Olvidaste tu contraseña?</a>
-</form>
+
+<div class="flex flex-col lg:flex-row items-center justify-center lg:justify-center h-screen">
+    <img class="lg:w-1/2 lg:max-w-lg w-4/6 lg:ml-0 mt-8 lg:mt-0" src="/static/images/chiquimundi.png" alt="Logo Chiquimundi">
+    <div class="lg:w-1/2 max-w-lg w-full mx-4 p-6 border rounded-lg shadow-lg">
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md">Login</button>
+        </form>
+        <div class="py-5 border-t border-gray-200 mt-5 text-center">
+            <a class="hover:text-blue-500 mt-3" href="{% url 'reset-password' %}">¿Olvidaste tu contraseña?</a>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}

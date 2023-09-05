@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">{{ category.name }}</h1>
+    </div>
+    <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+      <table class="table-auto w-full text-left whitespace-no-wrap">
+        <thead>
+          <tr>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Nombre</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Apellido</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Teléfono</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">E-mail</th>
+            {% if category.id == 2 %}
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Contactado por:</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+        {% for lead in leads %}
+            <tr>
+                <td class="px-4 py-3">{{ lead.nombre }}</td>
+                <td class="px-4 py-3">{{ lead.apellido }}</td>
+                <td class="px-4 py-3">{{ lead.telefono }}</td>
+                <td class="px-4 py-3">{{ lead.email }}</td>
+                {% if category.id == 2 %}
+                  <td class="px-4 py-3">{{ lead.agente }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="flex mt-6 justify-center">
+      <a href="{% url 'leads:category-list'%}" class="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-md focus:outline-none">
+          Regresa a la lista de Categoría
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

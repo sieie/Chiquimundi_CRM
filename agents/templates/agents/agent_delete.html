@@ -1,12 +1,16 @@
 {% extends "base.html" %}
-
+{% load tailwind_filters %}
 {% block content %}
-    <a href="{% url 'agents:agent-lista' %}">Regresar a los agentes de ventas</a>
-    <hr/>
-    <h1>Estás seguro que deseas eliminar este Agente de Venta?</h1>
-    <form method="post">
+
+<div class="max-w-lg mx-auto mt-12">
+    <div class="py-5 border-b border-gray-200">
+        <a class="hover:text-blue-500" href="{% url 'agents:agent-lista'%}">Regresar a la lista de agentes</a>
+    </div>
+    <h1 class="text-3xl text-gray-800 mt-3">Estás seguro que deseas eliminar este Agente de Venta?</h1>
+    <form method="post" class="mt-5">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Confirmar</button>
+        {{ form.crispy }}
+        <button type="submit" class="w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded-md">Confirmar</button>
     </form>
+</div>
 {% endblock content %}

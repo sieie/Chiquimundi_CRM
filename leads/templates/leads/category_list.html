@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-16 mx-auto">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-medium text-gray-900">Categorías</h1>
+    </div>
+    <div class="lg:w-2/3 w-full mx-auto overflow-x-auto">
+      <table class="w-full text-left whitespace-no-wrap">
+        <thead>
+          <tr>
+            <th class="px-4 py-3 text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Estado de Leads</th>
+            <th class="px-4 py-3 text-gray-900 text-sm bg-gray-100">Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="px-4 py-3">Sin Asignar</td>
+                <td class="px-4 py-3">{{ unassigned_lead_count }}</td>
+            </tr>
+            {% for category_with_lead_count in categories_with_lead_counts %}
+            <tr>
+                <td class="px-4 py-3">
+                    <a href="{% url 'leads:category-detail' category_with_lead_count.category.pk %}" class="text-indigo-500 hover:underline">
+                        {{ category_with_lead_count.category.name }}
+                    </a>
+                </td>
+                <td class="px-4 py-3">{{ category_with_lead_count.lead_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="flex justify-center mt-8">
+            <a href="{% url 'leads:list'%}"
+              class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded md:mb-0 mb-2">Regresar
+              a la lista de Leads</a>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
