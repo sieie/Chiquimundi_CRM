@@ -1,11 +1,13 @@
+from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import reverse
-from leads.models import Agent
+from django.shortcuts import render, reverse
+from leads.models import Agent, User
 from .forms import AgentModelForm
 from .mixins import OrganisorAndLoginRequiredMixin
 
+User = get_user_model()
 
 class AgentListView(OrganisorAndLoginRequiredMixin, generic.ListView):
     template_name = "agents/agent_list.html"
@@ -20,24 +22,32 @@ class AgentCreateView(OrganisorAndLoginRequiredMixin, generic.CreateView):
     form_class = AgentModelForm
     
     def get_success_url(self):
-        return reverse("agents:agent-lista")
+        return reverse("agents:agent-list")
     
     def form_valid(self, form):
-        user = form.save(commit=False)
-        user.is_agent = True
-        user.is_organisor = False
-        user.save()
-        Agent.objects.create(
-            user=user,
-            organisation=self.request.user.userprofile,
+        # Guarda el formulario de agente sin cometerlo a la base de datos
+        agent = form.save(commit=False)
+        
+        # Obtiene o crea el usuario asociado al agente por su nombre
+        user, created = User.objects.get_or_create(
+            username=agent.nombre,
+            defaults={
+                'email': agent.email,
+                'is_agent': True,
+                'is_organisor': False,
+            }
         )
-        send_mail(
-            subject="Fuiste agregado como nuevo agente de ventas!!",
-            message="Genial!!  Ahora es tiempo de que comiences con pie derecho, por favor ingresa con tus credenciales al sistema CRM.",
-            from_email="eedelgado@est.istg.edu.ec",
-            recipient_list=[user.email]
-        )
+
+        # Asigna el usuario al agente
+        agent.user = user
+        agent.organisation = self.request.user.userprofile
+        agent.save()
+
         return super(AgentCreateView, self).form_valid(form)
+    
+    def form_invalid(self, form):
+        return render(self.request, 'agents/agent_create_error.html')
+
 
 
 class AgentDetailView(OrganisorAndLoginRequiredMixin, generic.DetailView):
@@ -54,7 +64,7 @@ class AgentUpdateView(OrganisorAndLoginRequiredMixin, generic.UpdateView):
     form_class = AgentModelForm
     
     def get_success_url(self):
-        return reverse("agents:agent-lista")
+        return reverse("agents:agent-list")
     
     def get_queryset(self):
         organisation = self.request.user.userprofile
@@ -66,7 +76,7 @@ class AgentDeleteView(OrganisorAndLoginRequiredMixin, generic.DeleteView):
     context_object_name = "agent"
     
     def get_success_url(self):
-        return reverse("agents:agent-lista")
+        return reverse("agents:agent-list")
     
     def get_queryset(self):
         organisation = self.request.user.userprofile

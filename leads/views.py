@@ -1,11 +1,17 @@
+from django.db import transaction
 from django.core.mail import send_mail
+from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import FileResponse
 from django.views import generic
 from agents.mixins import OrganisorAndLoginRequiredMixin
-from .models import Lead, Category
-from .forms import LeadModelForm, CustomUserCreationForm, AssignAgentForm, LeadCategoryUpdateForm
+from .models import Lead, Category, Proforma
+from .forms import ArticuloForm, LeadModelForm, CustomUserCreationForm, AssignAgentForm, LeadCategoryUpdateForm, ProformaForm
+
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 class SignupView(generic.CreateView):
     template_name = "registration/signup.html"
@@ -299,4 +305,64 @@ class LeadCategoryUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         return reverse("leads:detail", kwargs={"pk": self.get_object().id})
+    
 
+#CREAR PROFORMA
+class CrearProformaView(generic.TemplateView):
+    template_name = 'leads/crear_proforma.html'
+
+    def post(self, request, *args, **kwargs):
+        form = ProformaForm(request.POST)
+        if form.is_valid():
+            with transaction.atomic():
+                proforma = form.save(commit=False)
+                articulos_seleccionados = form.cleaned_data['articulos']
+                proforma.save()
+                proforma.articulos.set(articulos_seleccionados)
+
+                # Agregar un mensaje de éxito
+                messages.success(request, 'La proforma se creó correctamente.')
+
+                # Renderizar el PDF y proporcionar el enlace en la respuesta
+                response = self.generate_pdf_response(proforma)
+                return response
+
+        return self.render_to_response({'form': form})
+
+    def get(self, request, *args, **kwargs):
+        form = ProformaForm()
+        return self.render_to_response({'form': form})
+
+    def generate_pdf_response(self, proforma):
+        # Carga la plantilla HTML para la proforma
+        template = get_template('leads/proforma_template.html')
+        context = {'proforma': proforma}
+
+        # Obtener los nombres de los artículos y agregarlos al contexto
+        articulos = proforma.articulos.all()
+        context['articulo_names'] = [articulo.nombre for articulo in articulos]
+
+        # Renderiza el HTML usando el contexto
+        html = template.render(context)
+
+        # Crea un objeto HttpResponse con el tipo de contenido PDF
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'filename=proforma_{proforma.id}.pdf'
+
+        # Crea el PDF a partir del HTML renderizado
+        pisa.CreatePDF(html, dest=response)
+        
+        return response
+    
+
+#CREAR ARTICULO
+def crear_articulo(request):
+    if request.method == 'POST':
+        form = ArticuloForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('leads:list') 
+    else:
+        form = ArticuloForm()
+    
+    return render(request, 'leads/articulo_create.html', {'form': form})

@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.contrib.auth import get_user_model
-from .models import Lead, User, Agent, Category
+from .models import Lead, User, Agent, Category, Proforma, Articulo
+from django.forms.widgets import SelectMultiple
+
 
 User = get_user_model()
 
@@ -11,6 +13,9 @@ class LeadModelForm(forms.ModelForm):
         fields = (
             'nombre',
             'apellido',
+            'direccion_domicilio',
+            'direccion_evento',
+            'cedula',
             'telefono',
             'agente',
             'email',
@@ -25,17 +30,9 @@ class LeadModelForm(forms.ModelForm):
             'email': 'Correo electrónico',
             'category': 'Estado de Lead',
             'description': 'Descripción',
+            'direccion_domicilio': 'Dirección de Domicilio',
+            'direccion_evento': 'Dirección del Evento',
         }
-
-# class LeadForm(forms.Form):
-#     nombre = forms.CharField()
-#     apellido = forms.CharField()
-#     telefono = forms.CharField()
-#     agente = forms.ChoiceField(choices='')
-#     email = forms.EmailField()
-#     estado = forms.ChoiceField(choices='')
-#     descripcion = forms.CharField()
-    
     
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -59,7 +56,7 @@ class LeadCategoryUpdateForm(forms.ModelForm):
         model = Lead
         fields = (
             'category',
-            )
+        )
         
         
 class CategoryModelForm(forms.ModelForm):
@@ -68,3 +65,29 @@ class CategoryModelForm(forms.ModelForm):
         fields = (
             'name',
         )
+        
+        
+class ProformaForm(forms.ModelForm):
+    class Meta:
+        model = Proforma
+        fields = ['fecha', 'agente', 'lead', 'estado', 'observacion', 'tiempo', 'pvp', 'cantidad', 'articulos']
+        labels = {
+            'estado': '¿Se realizó la venta?',
+            'pvp': 'Precio Total por las horas de alquiler',
+            'tiempo': 'Horas de Alquiler'
+        }
+        
+    articulos = forms.MultipleChoiceField(
+        choices=[(articulo.id, articulo.nombre) for articulo in Articulo.objects.all()],
+        widget=forms.CheckboxSelectMultiple,
+        required=True,
+    )
+        
+        
+class ArticuloForm(forms.ModelForm):
+    class Meta:
+        model = Articulo
+        fields = ['nombre', 'precio', 'stock', 'description']
+        labels = {
+            'precio': 'Precio por hora'
+        }

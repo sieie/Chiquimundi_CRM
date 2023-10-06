@@ -15,8 +15,11 @@
             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Apellido</th>
             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Teléfono</th>
             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">E-mail</th>
-            {% if category.id == 2 %}
+            {% if category.id == 1 %}
               <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Contactado por:</th>
+            {% endif %}
+            {% if category.id == 2 %}
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Vendido por:</th>
             {% endif %}
           </tr>
         </thead>
@@ -27,6 +30,9 @@
                 <td class="px-4 py-3">{{ lead.apellido }}</td>
                 <td class="px-4 py-3">{{ lead.telefono }}</td>
                 <td class="px-4 py-3">{{ lead.email }}</td>
+                {% if category.id == 1 %}
+                  <td class="px-4 py-3">{{ lead.agente }}</td>
+                {% endif %}
                 {% if category.id == 2 %}
                   <td class="px-4 py-3">{{ lead.agente }}</td>
                 {% endif %}

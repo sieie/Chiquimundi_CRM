@@ -1,1 +1,5 @@
-ODS 8: Trabajo decente y crecimiento económico: La implementación de la aplicación web CRM puede contribuir a mejorar la eficiencia operativa de Chiquimindi, lo que a su vez puede generar un crecimiento económico sostenible. El uso de tecnología y automatización puede permitir a la empresa ser más productiva y competitiva, generando oportunidades de empleo y desarrollo profesional para los trabajadores.
+El desarrollo de la aplicación web CRM puede contribuir a mejorar la eficiencia operativa de Chiquimindi, lo que a su vez puede generar un crecimiento económico sostenible. El uso de tecnología y automatización puede permitir a la empresa ser más productiva y competitiva, generando oportunidades de empleo y desarrollo profesional para los trabajadores.
+
+se usó la librería reportlab para el generador de reportes
+
+En este modelo, hemos definido la relación entre Proforma y Articulo utilizando models.ManyToManyField. Esto permite que una proforma tenga múltiples artículos y que un artículo pueda estar en múltiples proformas. Esta relación de muchos a muchos es adecuada para tu caso, ya que un cliente puede solicitar varios artículos en una sola proforma y un artículo puede estar en múltiples proformas si es requerido en diferentes ocasiones.

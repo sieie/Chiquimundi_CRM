@@ -5,7 +5,7 @@
 <section class="text-gray-600 body-font">
   <div class="container px-5 py-16 mx-auto">
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-medium text-gray-900">Categorías</h1>
+      <h1 class="text-3xl font-medium text-gray-900">Estado de Leads</h1>
     </div>
     <div class="lg:w-2/3 w-full mx-auto overflow-x-auto">
       <table class="w-full text-left whitespace-no-wrap">
@@ -16,10 +16,10 @@
           </tr>
         </thead>
         <tbody>
-            <tr>
+            <!-- <tr>
                 <td class="px-4 py-3">Sin Asignar</td>
                 <td class="px-4 py-3">{{ unassigned_lead_count }}</td>
-            </tr>
+            </tr> -->
             {% for category_with_lead_count in categories_with_lead_counts %}
             <tr>
                 <td class="px-4 py-3">

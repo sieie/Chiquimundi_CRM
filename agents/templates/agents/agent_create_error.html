@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% tailwind_filters %}
+{% block content %}
+<div class="container mx-auto my-10">
+  <h2 class="text-2xl font-semibold mb-4">Error al crear un agente</h2>
+  <p>Lo sentimos, hubo un problema al crear el agente. Por favor, verifica los datos ingresados y vuelve a intentarlo.</p>
+  <a href="{% url 'agents:agent-create' %}" class="text-blue-500 hover:text-blue-600">Volver a la página de creación de agentes</a>
+</div>
+{% endblock content %}
