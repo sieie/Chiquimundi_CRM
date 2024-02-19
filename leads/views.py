@@ -11,7 +11,6 @@ from .models import Lead, Category, Proforma
 from .forms import ArticuloForm, LeadModelForm, CustomUserCreationForm, AssignAgentForm, LeadCategoryUpdateForm, ProformaForm
 
 from django.template.loader import get_template
-from xhtml2pdf import pisa
 
 class SignupView(generic.CreateView):
     template_name = "registration/signup.html"

@@ -1,12 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM CHIQUIMUNDI</title> 
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet">   
+    <title>CRM CHIQUIMUNDI</title>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" type="image" href="/static/images/chiquimundi.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -15,11 +16,23 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 
 </head>
-<body>
-    <div class="max-w-7xl mx-auto">
-        {% include "navbar.html" %}
-        {% block content %}      
-        {% endblock content %}
-    </div>
+
+<body class="h-screen" style="background: #edf2f7;">
+    {% include "navbar.html" %}
+    {% block content %}
+    {% endblock content %}
 </body>
+
+<script>
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+    }
+</script>
+
 </html>

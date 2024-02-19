@@ -3,8 +3,10 @@
 {% block content %}
 
 <div class="flex flex-col lg:flex-row items-center justify-center lg:justify-center h-screen">
-    <img class="lg:w-1/2 lg:max-w-lg w-4/6 lg:ml-0 mt-8 lg:mt-0" src="/static/images/chiquimundi.png" alt="Logo Chiquimundi">
-    <div class="lg:w-1/2 max-w-lg w-full mx-4 p-6 border rounded-lg shadow-lg">
+    <div class="max-w-lg w-full mx-4 p-6 border rounded-lg shadow-lg">
+        <div class="flex justify-center">
+            <img src="/static/images/chiquimundi.png" alt="Logo" class="mb-4 w-40 justify-center">
+        </div>
         <form method="post" class="space-y-4">
             {% csrf_token %}
             {{ form|crispy }}
