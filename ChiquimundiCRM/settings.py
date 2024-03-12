@@ -40,13 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_tailwind',
+    'rest_framework',
+    'corsheaders',
     'leads',
-    'agents'
+    'agents',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -141,3 +144,8 @@ CRISPY_TEMPLATE_PACK = 'tailwind'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# FRONT END  CONFIGURATIONS
+CORS_ALLOWED_ORIGINS = [
+
+]

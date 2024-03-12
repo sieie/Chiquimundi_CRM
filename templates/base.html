@@ -11,16 +11,19 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" type="image" href="/static/images/chiquimundi.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script>
 
 </head>
 
-<body class="h-screen" style="background: #edf2f7;">
+<body style="background: #edf2f7;">
     {% include "navbar.html" %}
-    {% block content %}
-    {% endblock content %}
+    <main class="w-[calc(100%-256px)] ml-60">
+        {% block content %}
+        {% endblock content %}
+    </main>
 </body>
 
 <script>
